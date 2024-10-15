@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from 'react';
+import BestWorstMemes from './components/BestWorstMemes';
 import './App.css';
 
-function App() {
+const App = () => {
+  const memes = [
+    {
+      id: 1,
+      imageUrl: process.env.PUBLIC_URL + '/images/meme1.jpeg',
+      votes: 0,
+      comments: ['']
+    },
+    {
+      id: 2,
+      imageUrl: process.env.PUBLIC_URL + '/images/meme2.jpeg',
+      votes: 0,
+      comments: ['']
+    }
+  ];
+
+  const bestMeme = memes.reduce((prev, current) => (prev.votes > current.votes ? prev : current));
+  const worstMeme = memes.reduce((prev, current) => (prev.votes < current.votes ? prev : current));
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Ministerio de Memes</h1>
+      <BestWorstMemes bestMeme={bestMeme} worstMeme={worstMeme} />
     </div>
   );
-}
+};
 
 export default App;
