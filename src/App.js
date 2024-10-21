@@ -1,31 +1,32 @@
 import React from 'react';
-import BestWorstMemes from './components/BestWorstMemes';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Index from './index';
+import HistoricalMemes from './HistoricalMemes';
+import WeeklyMeme from './WeeklyMemes';
 import './App.css';
 
 const App = () => {
   const memes = [
-    {
-      id: 1,
-      imageUrl: process.env.PUBLIC_URL + '/images/meme1.jpeg',
-      votes: 0,
-      comments: ['']
-    },
-    {
-      id: 2,
-      imageUrl: process.env.PUBLIC_URL + '/images/meme2.jpeg',
-      votes: 0,
-      comments: ['']
-    }
+    { id: 1, imageUrl: '/images/meme1.jpeg', votes: 0, comments: [] },
+    { id: 2, imageUrl: '/images/meme2.jpeg', votes: 0, comments: [] }
   ];
 
-  const bestMeme = memes.reduce((prev, current) => (prev.votes > current.votes ? prev : current));
-  const worstMeme = memes.reduce((prev, current) => (prev.votes < current.votes ? prev : current));
+  const bestMeme = memes[0];
+  const worstMeme = memes[1];
 
   return (
-    <div className="App">
-      <h1>Ministerio de Memes</h1>
-      <BestWorstMemes bestMeme={bestMeme} worstMeme={worstMeme} />
-    </div>
+    <Router>
+      <nav className="navbar">
+        <Link to="/">Inicio</Link>
+        <Link to="/historical">Memes Históricos</Link>
+        <Link to="/weekly">Meme de la Semana</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/historical" element={<HistoricalMemes bestMeme={bestMeme} worstMeme={worstMeme} />} />
+        <Route path="/weekly" element={<WeeklyMeme bestMeme={bestMeme} worstMeme={worstMeme} />} />
+      </Routes>
+    </Router>
   );
 };
 
